@@ -138,6 +138,8 @@
     position: relative;
     text-align:left;
     font-size: 24px;
+    height: 70px;
+    line-height: 70px;
   }
 
   .healthIcon {
