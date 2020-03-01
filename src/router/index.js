@@ -8,12 +8,13 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: home
+    component: resolve => {require(['../views/home.vue'],resolve) }
   },
   {
     path: '*',
     name: 'view',
-    component: () => import(/* webpackChunkName: "about" */ '../views/view.vue')
+    //component: () => import(/* webpackChunkName: "about" */ '../views/view.vue')
+    component: resolve => {require(['../views/view.vue'],resolve) }
   }
 ]
 

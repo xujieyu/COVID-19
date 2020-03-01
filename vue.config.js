@@ -1,8 +1,10 @@
 const path = require("path");
+const CompressionPlugin = require("compression-webpack-plugin");
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   outputDir: 'dist',
-  lintOnSave: true,
+  lintOnSave: false,
+  productionSourceMap: false,
   transpileDependencies: ['resize-detector'],
   chainWebpack: config => {
 
@@ -41,6 +43,15 @@ module.exports = {
         }
       }
     })
+  },
+  configureWebpack: {
+    plugins: [
+      new CompressionPlugin({
+        test: /\.(js|css)(\?.*)?$/i,//需要压缩的文件正则
+        threshold: 10240,//文件大小大于这个值时启用压缩
+        deleteOriginalAssets: false//压缩后保留原文件
+      })
+    ]
   },
   transpileDependencies: [
     'resize-detector'
