@@ -49,7 +49,7 @@
             </van-popup>
 
             <van-popup v-model="isShow" position="center" closeable close-icon="close" :style="{width: '80%'}">
-              <div style="text-align: left; font-size: 12Px; padding-left: 2px ">
+              <div style="text-align: left; font-size: 20px; padding-left: 2px ">
                 <div style="color: #2b70c7;">1. 数据来源：</div>
                 <div>数据同步获取自(<a href="https://github.com/canghailan/Wuhan-2019-nCoV">[Wuhan-2019-nCoV]</a>项目</div><br>
                 <div style="color: #2b70c7">2. 数据描述:</div>
@@ -260,7 +260,7 @@
 
   .total-title
     height: 28Px;
-    font-size 24Px;
+    font-size 24px;
     line-height 28Px;
 
   .tabcotrol1
@@ -289,13 +289,13 @@
     background: #e5feff;
     border-radius: 51px;
     text-align: center;
-    font-size: 14Px;
+    font-size: 14px;
     color: #104345;
 
   .mapTitle
     position: relative;
     text-align: left;
-    font-size: 18Px;
+    font-size: 18px;
     margin-top 15px;
     padding  0 15px
 
@@ -308,7 +308,7 @@
     top: 20px;
     white-space: nowrap;
     color: #737373;
-    font-size: 14Px;
+    font-size: 14px;
     margin-left: 20px;
     padding-left 15px;
     background: url(https://mat1.gtimg.com/news/zhishiguan/page/icon_qs.png) no-repeat left center;
@@ -319,17 +319,17 @@
     flex-wrap: wrap;
     padding  20px 20px
     .number
-      font-size 20Px
+      font-size 20px
       font-weight bold
       padding: 8px 5px 5px 5px
     .small-number
-      font-size 12Px
+      font-size 12px
     .tag
       height 35px
       line-height 35px
-      font-size 14Px
+      font-size 18px
     .tip
-      font-size 12Px
+      font-size 12px
       padding-top 10px
       color: #8B8989
     .confirm

@@ -54,7 +54,7 @@
     > li
       flex 1
       text-align center
-      font-size 18px
+      font-size 14px
       height 45px
       line-height 45px
   .table-body
@@ -66,14 +66,14 @@
         display inline-block
         width 20%
         text-align center
-        font-size 16px
+        font-size 14px
         height 40px
         line-height 40px
     .table-province
       background-color #F8F8F8
       // padding: 0 15px
       > div
-        font-size 16px
+        font-size 14px
   .item-stress
     color #005DFF
 

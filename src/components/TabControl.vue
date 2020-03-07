@@ -42,7 +42,7 @@
     display: flex;
     text-align: center;
 
-    font-size: 18Px;
+    font-size: 24px;
     background-color: #fff;
     z-index: 9;
   }
