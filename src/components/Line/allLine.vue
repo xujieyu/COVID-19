@@ -2,10 +2,24 @@
   <div id="allLine">
     <div v-if="province == '全国'">
       <div class="myLine" ref="map" ></div>
-      <div class="myLine" ref="map1" ></div>
+      <div class="china-info">
+        <div class="china-item"
+             :class="{active: currentIndex === index}"
+             @click="itemClick(index)"
+             v-for="(item, index) in list1">
+          <span>{{item}}</span>
+        </div>
+      </div>
       <div class="myLine" ref="map2" ></div>
-      <div class="myLine" ref="map3" ></div>
-      <div class="myLine" ref="map4" ></div>
+      <div class="china-info">
+        <div class="hubei-item"
+             :class="{active: hubeiIndex === index}"
+             @click="hubeiClick(index)"
+             v-for="(item, index) in list2">
+          <span>{{item}}</span>
+        </div>
+      </div>
+
     </div>
     <div v-else="province != '全国'">
       <div class="myLine" ref="map11" ></div>
@@ -17,9 +31,8 @@
 </template>
 
 <script>
-  import echarts from "echarts";
-  import {getHomeMultidata, getLineMultidata} from "../../network/home";
-  import {buildLineConfig,buildLineAdd,buildLineAHubei,buildHealConfig,buildAddHubei,buildLineProvince} from "./config_line"
+  import echarts from "../echarts";
+  import {buildLineConfig,buildLineAdd,buildLineAHubei,buildHealConfig,buildAddHubei,buildLineProvince,buildTodayConfig,buildDeadHubei,buildHealHubei} from "./config_line"
   export default {
     name: "allLine",
     props:{
@@ -30,12 +43,19 @@
     },
     data(){
       return{
+        currentIndex: 0,
+        hubeiIndex: 0,
+        list1:['每日变化趋势','现有变化趋势','累计变化趋势'],
+        list2:['每日确诊对比','累计确诊对比','治愈对比','死亡对比'],
         chinaOption:{},
         chinaAddOption:{},
         hubeiOption:{},
         addHubeiOption:{},
+        hubeiDeadOption:{},
+        hubeiHealOption:{},
         deadOption:{},
         provinceOption:{},
+        todayOption:{},
 
       }
     },
@@ -43,24 +63,83 @@
       this.mapEchartsInit();
     },
     methods: {
+      itemClick(index){
+        this.currentIndex = index;
+        if(index === 0){
+          let myChart=echarts.init(this.$refs.map);
+          myChart.hideLoading();
+          myChart.clear();
+          myChart.setOption(this.chinaAddOption);
+
+        }
+        if(index === 1){
+          let myChart1=echarts.init(this.$refs.map);
+          myChart1.hideLoading();
+          myChart1.clear();
+          myChart1.setOption(this.todayOption);
+        }
+        else if(index === 2){
+          let myChart2=echarts.init(this.$refs.map);
+          myChart2.hideLoading();
+          myChart2.clear();
+          myChart2.setOption(this.chinaOption);
+        }
+      },
+      hubeiClick(index){
+        this.hubeiIndex = index;
+        if(index === 0){
+          let myChart10=echarts.init(this.$refs.map2);
+          myChart10.hideLoading();
+          myChart10.clear();
+          myChart10.setOption(this.addHubeiOption);
+        }
+        if(index === 1){
+          let myChart11=echarts.init(this.$refs.map2);
+          myChart11.hideLoading();
+          myChart11.clear();
+          myChart11.setOption(this.hubeiOption);
+        }
+        else if(index === 2){
+          let myChart2=echarts.init(this.$refs.map2);
+          myChart2.hideLoading();
+          myChart2.clear();
+          myChart2.setOption(this.hubeiHealOption);
+        }
+        else if(index === 3){
+          let myChart3=echarts.init(this.$refs.map2);
+          myChart3.hideLoading();
+          myChart3.clear();
+          myChart3.setOption(this.hubeiDeadOption);
+        }
+      },
       mapEchartsInit(){
         //getLineMultidata()
-         //   .then(res => {
-        let res = require('../../data/Wuhan-2019-nCoV');
+          //  .then(res => {
+        let res = require('../../data/resultHome');
         if(this.province == '全国'){
           let date = [];
           let dataConfirm = [];
           let dataSuspect = [];
           let dataDead = [];
           let dataHeal = [];
+          let todayConfirm = [];
+          let todaySuspect = [];
           let addDate = [];
           let addConfirm = [];
           let addSuspect = [];
           let addDead = [];
           let addHeal = [];
+          let hubeiAllConfirm = [];
+          let hubeiAddConfirm = [];
+          let hubeiAllDead = [];
+          let hubeiAllHeal = [];
           let hubeiDate = [];
           let hubei = [];
           let notHubei = [];
+          let hubeiDead = [];
+          let notHubeiDead = [];
+          let hubeiHeal = [];
+          let notHubeiHeal = [];
           let addHubeiDate = [];
           let addHubei = [];
           let addNotHubei = [];
@@ -71,17 +150,21 @@
               dataSuspect.push(item.suspected);
               dataDead.push(item.dead);
               dataHeal.push(item.cured);
+              todayConfirm.push(item.confirmed - item.dead - item.cured);
+              todaySuspect.push(item.suspected);
             }
             if(item.countryCode == "CN" && item.provinceCode == '420000' && item.city == ''){
               hubeiDate.push(item.date);
               hubei.push(item.confirmed);
+              hubeiDead.push(item.dead);
+              hubeiHeal.push(item.cured);
             }
           });
-          addDate.push(date[0]);
-          addConfirm.push(dataConfirm[0]);
-          addSuspect.push(dataSuspect[0]);
-          addDead.push(dataDead[0]);
-          addHeal.push(dataHeal[0]);
+          //addDate.push(date[0]);
+          //addConfirm.push(dataConfirm[0]);
+         // addSuspect.push(dataSuspect[0]);
+          //addDead.push(dataDead[0]);
+          //addHeal.push(dataHeal[0]);
           for(let i = 1; i<date.length; i = i+1){
             addDate.push(date[i]);
             addConfirm.push(dataConfirm[i] - dataConfirm[i-1]);
@@ -89,43 +172,43 @@
             addDead.push(dataDead[i] - dataDead[i-1]);
             addHeal.push(dataHeal[i] - dataHeal[i-1]);
           }
-          addHubeiDate.push(hubeiDate[0]);
-          addHubei.push(hubei[0]);
-          addNotHubei.push(notHubei[0]);
+          //addHubeiDate.push(hubeiDate[0]);
+          //addHubei.push(hubei[0]);
+
           for(let i = 0;i<hubeiDate.length;i=i+1){
             let index = date.findIndex(ele => ele === hubeiDate[i]);
             notHubei.push(dataConfirm[index] - hubei[i]);
+            notHubeiDead.push(dataDead[index] - hubeiDead[i]);
+            notHubeiHeal.push(dataHeal[index] - hubeiHeal[i]);
+            hubeiAddConfirm.push(addConfirm[index]);
+            hubeiAllConfirm.push(dataConfirm[index]);
+            hubeiAllDead.push(dataDead[index]);
+            hubeiAllHeal.push(dataHeal[index]);
+            //if(i === 0) addNotHubei.push(notHubei[0]);
             if(i >0){
               addHubeiDate.push(hubeiDate[i]);
               addHubei.push(hubei[i] - hubei[i-1]);
               addNotHubei.push(notHubei[i] - notHubei[i-1]);
             }
           }
-          this.chinaOption = buildLineConfig(date, dataConfirm, dataSuspect, dataDead);
-          let myChart=echarts.init(this.$refs.map);
-          myChart.hideLoading();
-          myChart.setOption(this.chinaOption);
-
+          this.chinaOption = buildLineConfig(date, dataConfirm, dataSuspect, dataDead, dataHeal);
+          this.todayOption = buildTodayConfig(date,todayConfirm,todaySuspect);
           this.deadOption = buildHealConfig(date, dataHeal, dataDead);
-          let myChart3=echarts.init(this.$refs.map1);
-          myChart3.hideLoading();
-          myChart3.setOption(this.deadOption);
-
-          this.chinaAddOption = buildLineAdd(addDate,addConfirm,addSuspect,addDead);
-          let myChart1=echarts.init(this.$refs.map2);
+          this.chinaAddOption = buildLineAdd(addDate,addConfirm,addSuspect,addDead,addHeal);
+          this.hubeiOption = buildLineAHubei(hubeiDate,hubeiAllConfirm, hubei, notHubei);
+          let myChart1=echarts.init(this.$refs.map);
           myChart1.hideLoading();
           myChart1.setOption(this.chinaAddOption);
 
-          this.hubeiOption = buildLineAHubei(hubeiDate,hubei,notHubei);
-          let myChart2=echarts.init(this.$refs.map3);
-          myChart2.hideLoading();
-          myChart2.setOption(this.hubeiOption);
 
           //map4
-          this.addHubeiOption = buildAddHubei(addHubeiDate,addHubei,addNotHubei);
-          let myChart4=echarts.init(this.$refs.map4);
+          this.addHubeiOption = buildAddHubei(addHubeiDate, hubeiAddConfirm, addHubei, addNotHubei);
+          let myChart4=echarts.init(this.$refs.map2);
           myChart4.hideLoading();
           myChart4.setOption(this.addHubeiOption);
+
+          this.hubeiDeadOption = buildDeadHubei(hubeiDate, hubeiAllDead, hubeiDead, notHubeiDead);
+          this.hubeiHealOption = buildHealHubei(hubeiDate, hubeiAllHeal, hubeiHeal, notHubeiHeal);
         }
 
 
@@ -156,25 +239,33 @@
             }
 
           });
+
+
           let provinceAddConfirm = [];
-          provinceAddConfirm.push(provinceConfirm[0]);
+          //provinceAddConfirm.push(provinceConfirm[0]);
           let provinceAddSuspect = [];
-          provinceAddSuspect.push(provinceSuspect[0]);
+          //provinceAddSuspect.push(provinceSuspect[0]);
           let provinceAddDead = [];
-          provinceAddDead.push(provinceDead[0]);
+          //provinceAddDead.push(provinceDead[0]);
           let provinceAddHeal = [];
-          provinceAddHeal.push(provinceHeal[0]);
+          //provinceAddHeal.push(provinceHeal[0]);
+          console.log(provinceDate.length);
           for(let i = 1; i<provinceDate.length; i = i+1){
             provinceAddConfirm.push(provinceConfirm[i] - provinceConfirm[i-1]);
             provinceAddSuspect.push(provinceSuspect[i] - provinceSuspect[i-1]);
             provinceAddHeal.push(provinceHeal[i] - provinceHeal[i-1]);
             provinceAddDead.push(provinceDead[i] - provinceDead[i-1]);
           };
+          provinceDate.splice(0,1);
           this.provinceOption = buildLineProvince(provinceDate, provinceAddConfirm, provinceAddHeal,provinceAddDead);
           let myChart11=echarts.init(this.$refs.map11);
           myChart11.hideLoading();
           myChart11.setOption(this.provinceOption);
         }
+            //})
+            //.catch(function (error) { // 请求失败处理
+              //console.log(error);
+            //});
            // })
 
       }
@@ -186,6 +277,62 @@
   #allLine {
     padding:  15px 15px;
   }
+
+  .china-info{
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+  }
+
+  .china-item {
+    width: 33%;
+    background-color: #f5f6f7;
+    border-radius: 5px;
+    color: #555;
+    font-size: 16px;
+    line-height: 40px;
+    position: relative;
+    margin-right: 5px;
+    height: 40px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
+  .hubei-item {
+    width: 25%;
+    background-color: #f5f6f7;
+    border-radius: 5px;
+    color: #555;
+    font-size: 16px;
+    line-height: 40px;
+    position: relative;
+    margin-right: 5px;
+    height: 40px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
+  .active{
+    background-color: #5480c9;
+    color: #fff;
+  }
+
   .myLine {
     table-layout: fixed;
     width: 100%;

@@ -1,11 +1,11 @@
 <template>
   <div id="mytable" >
-    <ul class="table-header">
-      <li class="item-stress">地区</li>
-      <li class="item-stress">昨日新增</li>
-      <li>累计确诊</li>
-      <li>累计治愈</li>
-      <li>累计死亡</li>
+    <ul class="table-header tab-control " :class="{'tabControl2': isHome, 'tabControl3': !isHome}">
+      <li class="item-stress tab-control-item">地区</li>
+      <li class="item-stress tab-control-item">昨日新增</li>
+      <li class="tab-control-item">累计确诊</li>
+      <li class="tab-control-item">累计治愈</li>
+      <li class="tab-control-item">累计死亡</li>
     </ul>
     <ul class="table-body">
       <li v-for="item in mychildren" class="table-province" >
@@ -26,6 +26,10 @@
       mychildren:{
           type: Array,
           default: []
+      },
+      isHome:{
+        type: Boolean,
+        default: true
       }
     }
   }
@@ -34,13 +38,23 @@
 <style lang="stylus">
   #mytable
     padding  0 15px;
+  .tabControl2
+    background-color white
+    position sticky
+    top 59px
+
+  .tabControl3
+    background-color white
+    position sticky
+    top 0px
+
   .table-header
     // padding: 0 15px
     display flex
     > li
       flex 1
       text-align center
-      font-size 14px
+      font-size 18px
       height 45px
       line-height 45px
   .table-body
@@ -52,14 +66,14 @@
         display inline-block
         width 20%
         text-align center
-        font-size 12px
+        font-size 16px
         height 40px
         line-height 40px
     .table-province
       background-color #F8F8F8
       // padding: 0 15px
       > div
-        font-size 14px
+        font-size 16px
   .item-stress
     color #005DFF
 

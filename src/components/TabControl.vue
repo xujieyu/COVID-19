@@ -41,14 +41,16 @@
   .tab-control {
     display: flex;
     text-align: center;
-    line-height: 60px;
-    font-size: 20px;
+
+    font-size: 18Px;
     background-color: #fff;
     z-index: 9;
   }
 
   .tab-control-item {
     flex: 1;
+    height: 40Px;
+    line-height: 40Px;
   }
 
   .tab-control-item span {

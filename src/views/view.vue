@@ -1,36 +1,43 @@
 <template>
   <div v-if="info.table.length">
-    <div class="data-statement">
-      <div class="statement-title">{{info.provinceName}} | 疫情状况</div>
-      <div class="update-time">截止 {{info.updateTime}}</div>
-      <div class="shuoming" style="color: #000000; padding-right: 15px;" @click="backClick">
-        <button class="back" style="color: rgba(0,0,0,0.98);padding: 0 5px">返回首页</button>
-
-      </div>
-
-    </div>
-    <div class="summary">
-      <div class="confirm">
-        <div class="number">{{info.total.addNum}}</div>
-        <div class="tag"><span>新增确诊</span></div>
-      </div>
-      <div class="suspect">
-        <div class="number">{{info.total.confirm}}</div>
-        <div class="tag"><span>累计确诊</span></div>
-      </div>
-      <div class="heal">
-        <div class="number">{{info.total.heal}}</div>
-        <div class="tag"><span>累计治愈</span></div>
-      </div>
-      <div class="dead">
-        <div class="number">{{info.total.dead}}</div>
-        <div class="tag"><span>累计死亡</span></div>
+    <div class="photo data-statement">
+      <div style="padding-top: 25Px">
+        <div style="color: #ede3e6;font-size: 20Px">新型冠状病毒</div>
+        <div class="threed"><span>肺炎疫情实时监控</span></div>
+        <div class="update-time">截止 {{info.updateTime}}</div>
+        <div class="shuoming">
+          <button class="back" @click="backClick" style="color: rgba(0,0,0,0.98);padding: 0 5px;background-color: #c0d7ff">返回首页</button>
+        </div>
       </div>
     </div>
+    <div class="information">
+      <div class="data-statement">
+        <div class="statement-title">{{info.provinceName}} | 疫情状况</div>
+      </div>
+      <div class="summary">
+        <div class="confirm">
+          <div class="number">{{info.total.addNum}}</div>
+          <div class="tag"><span>新增确诊</span></div>
+        </div>
+        <div class="suspect">
+          <div class="number">{{info.total.confirm}}</div>
+          <div class="tag"><span>累计确诊</span></div>
+        </div>
+        <div class="heal">
+          <div class="number">{{info.total.heal}}</div>
+          <div class="tag"><span>累计治愈</span></div>
+        </div>
+        <div class="dead">
+          <div class="number">{{info.total.dead}}</div>
+          <div class="tag"><span>累计死亡</span></div>
+        </div>
+      </div>
 
-    <myMap :mapProvince="info.provinceName" :mapValue="info.mapInfo"></myMap>
-    <allLine :province="info.provinceName"></allLine>
-    <mytable :mychildren = info.table></mytable>
+      <myMap :mapProvince="info.provinceName" :mapValue="info.mapInfo"></myMap>
+      <allLine :province="info.provinceName"></allLine>
+      <mytable :mychildren = info.table :isHome="false"></mytable>
+    </div>
+
   </div>
 </template>
 
@@ -73,8 +80,8 @@
       },
       getData(){
         //getLineMultidata()
-            //.then(res => {
-        let res = require("../data/Wuhan-2019-nCoV");
+        //    .then(res => {
+        let res = require("../data/resultView");
               let province = this.$route.path.substr(1);
               this.info.provinceName = getNameByPinyin(province);
 
@@ -131,18 +138,21 @@
                 tempMap.name = item.city;
                 let yesterdayList = list2.filter(e => e.city === item.city);
                 let beYesterdayList = list3.filter(e => e.city === item.city);
-                if(beYesterdayList.length === 0) temp.add = yesterdayList[0].confirmed;
+                if (yesterdayList.length === 0) temp.add = 0;
+                else if(beYesterdayList.length === 0) temp.add = yesterdayList[0].confirmed;
                 else  temp.add = yesterdayList[0].confirmed - beYesterdayList[0].confirmed;
                 temp.confirm = item.confirmed;
                 temp.dead = item.dead;
                 temp.heal = item.cured;
                 tempMap.value = item.confirmed - item.dead - item.cured;
                 this.info.mapInfo.push(tempMap);
-                this.info.table.push(temp);
+                if(temp.name.length < 4){
+                  this.info.table.push(temp);
+                }
               });
             //})
             //.catch(function (error) { // 请求失败处理
-            //  console.log(error);
+              //console.log(error);
             //});
       }
     },
@@ -158,6 +168,27 @@
 
 
 <style lang="stylus">
+  .photo
+    text-align left;
+    margin 0px 10px
+    height 150Px
+    background url("../img/virus.png") no-repeat
+    background-position right
+    background-size 140Px 140Px
+
+  .threed
+    font-size: 30Px;
+    font-weight: bold;
+    background-image: linear-gradient(#ede3e6, #79749b);
+    -webkit-background-clip: text;
+    color: transparent ;
+  .information
+    background-color: #fff;
+    position: relative;
+    border-radius: 10px;
+    margin: -10px 0 15px;
+    padding 10px 10px 18px;
+
   .back
     height: 28Px
     line-height 28Px
@@ -215,4 +246,8 @@
       text-align center
       overflow hidden
   // padding 15px 0
+  .tabControl2
+    background-color white
+    position sticky
+    top 0px
 </style>

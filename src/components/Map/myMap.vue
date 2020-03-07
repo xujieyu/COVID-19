@@ -3,7 +3,7 @@
 </template>
 
 <script>
-  import echarts from "echarts";
+  import echarts from "../echarts";
   //import 'echarts/map/js/province/henan.js';
   //import option from "./config_map.js";
   import {getHomeMultidata, getLineMultidata} from "../../network/home";
@@ -27,8 +27,8 @@
     methods:{
       mapEchartsInit(){
         //getLineMultidata()
-            //.then(res => {
-        let res = require('../../data/Wuhan-2019-nCoV');
+          //  .then(res => {
+        //let res = require('../../data/Wuhan-2019-nCoV');
               let myChart=echarts.init(this.$refs.map);
               const provincePinyin = getPinyinByName(this.mapProvince);
               if (this.mapProvince == '全国') {
@@ -44,8 +44,8 @@
               }
             //})
             //.catch(function (error) { // 请求失败处理
-            //  console.log(error);
-           // });
+              //console.log(error);
+            //});
       }
     }
   }

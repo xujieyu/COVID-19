@@ -1,10 +1,10 @@
-export function buildLineConfig (xAxis, dataConfirm, dataSuspect, dataDead) {
+export function buildLineConfig (xAxis, dataConfirm, dataSuspect, dataDead, dataHeal) {
   return {
     title: {
-      text: '疫情累计趋势(人)'
+      text: '全国累计趋势(人)'
     },
     legend: {
-      data: ['累计确诊', '累计疑似', '累计死亡'],
+      data: ['确诊', '疑似', '治愈', '死亡'],
       top: '25',
       left: '0'
     },
@@ -49,10 +49,71 @@ export function buildLineConfig (xAxis, dataConfirm, dataSuspect, dataDead) {
         data: dataSuspect
       },
       {
+        name: '累计治愈',
+        type: 'line',
+        smooth: true,
+        data: dataHeal
+      },
+      {
         name: '累计死亡',
         type: 'line',
         smooth: true,
         data: dataDead
+      }
+    ]
+  }
+}
+
+export function buildTodayConfig (xAxis, dataConfirm, dataSuspect) {
+  return {
+    title: {
+      text: '现有确诊和疑似趋势(人)'
+    },
+    legend: {
+      data: ['确诊', '疑似'],
+      top: '25',
+      left: '0'
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: true,
+        data: xAxis
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    tooltip : {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    series: [
+      {
+        name: '现有确诊',
+        type: 'line',
+        smooth: true,
+        data: dataConfirm
+      },
+
+      {
+        name: '现有疑似',
+        type: 'line',
+        smooth: true,
+        data: dataSuspect
       }
     ]
   }
@@ -113,13 +174,13 @@ export function buildHealConfig (xAxis, dataHeal, dataDead) {
   }
 }
 
-export function buildLineAdd (xAxis, dataConfirm, dataSuspect, dataDead) {
+export function buildLineAdd (xAxis, dataConfirm, dataSuspect, dataDead, dataHeal) {
   return {
     title: {
-      text: '全国疫情每日增加（人）'
+      text: '全国疫情每日变化（人）'
     },
     legend: {
-      data: ['每日确诊', '每日疑似', '每日死亡'],
+      data: ['确诊', '疑似', '治愈', '死亡'],
       top: '25',
       left: '0'
     },
@@ -152,33 +213,40 @@ export function buildLineAdd (xAxis, dataConfirm, dataSuspect, dataDead) {
     },
     series: [
       {
-        name: '每日确诊',
+        name: '较昨日确诊',
         type: 'line',
         smooth: true,
         data: dataConfirm
       },
       {
-        name: '每日疑似',
+        name: '较昨日疑似',
         type: 'line',
         smooth: true,
         data: dataSuspect
       },
       {
-        name: '每日死亡',
+        name: '较昨日治愈',
+        type: 'line',
+        smooth: true,
+        data: dataHeal
+      },
+      {
+        name: '较昨日死亡',
         type: 'line',
         smooth: true,
         data: dataDead
       }
+
     ]
   }
 }
-export function buildLineAHubei (xAxis, hubei, notHubei) {
+export function buildLineAHubei (xAxis, all, hubei, notHubei) {
   return {
     title: {
-      text: '湖北、非湖北累计确诊增量'
+      text: '全国/湖北/湖北累计确诊增量'
     },
     legend: {
-      data: ['湖北', '非湖北'],
+      data: ['全国', '湖北', '非湖北'],
       top: '25',
       left: '0'
     },
@@ -210,6 +278,12 @@ export function buildLineAHubei (xAxis, hubei, notHubei) {
       }
     },
     series: [
+      {
+        name: '全国',
+        type: 'line',
+        smooth: true,
+        data: all
+      },
       {
         name: '湖北',
         type: 'line',
@@ -226,13 +300,13 @@ export function buildLineAHubei (xAxis, hubei, notHubei) {
   }
 }
 
-export function buildAddHubei (xAxis, hubei, notHubei) {
+export function buildAddHubei (xAxis, all, hubei, notHubei) {
   return {
     title: {
-      text: '湖北、非湖北每日确诊增量'
+      text: '全国/湖北/非湖北每日确诊增量'
     },
     legend: {
-      data: ['湖北', '非湖北'],
+      data: ['全国', '湖北', '非湖北'],
       top: '25',
       left: '0'
     },
@@ -264,6 +338,132 @@ export function buildAddHubei (xAxis, hubei, notHubei) {
       }
     },
     series: [
+      {
+        name: '全国',
+        type: 'line',
+        smooth: true,
+        data: all
+      },
+      {
+        name: '湖北',
+        type: 'line',
+        smooth: true,
+        data: hubei
+      },
+      {
+        name: '非湖北',
+        type: 'line',
+        smooth: true,
+        data: notHubei
+      }
+    ]
+  }
+}
+
+export function buildDeadHubei (xAxis, all, hubei, notHubei) {
+  return {
+    title: {
+      text: '全国/湖北/非湖北死亡病例'
+    },
+    legend: {
+      data: ['全国', '湖北', '非湖北'],
+      top: '25',
+      left: '0'
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: true,
+        data: xAxis
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    tooltip : {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    series: [
+      {
+        name: '全国',
+        type: 'line',
+        smooth: true,
+        data: all
+      },
+      {
+        name: '湖北',
+        type: 'line',
+        smooth: true,
+        data: hubei
+      },
+      {
+        name: '非湖北',
+        type: 'line',
+        smooth: true,
+        data: notHubei
+      }
+    ]
+  }
+}
+
+export function buildHealHubei (xAxis, all, hubei, notHubei) {
+  return {
+    title: {
+      text: '全国/湖北/非湖北治愈病例'
+    },
+    legend: {
+      data: ['全国', '湖北', '非湖北'],
+      top: '25',
+      left: '0'
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: true,
+        data: xAxis
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    tooltip : {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    series: [
+      {
+        name: '全国',
+        type: 'line',
+        smooth: true,
+        data: all
+      },
       {
         name: '湖北',
         type: 'line',
@@ -286,7 +486,7 @@ export function buildLineProvince (xAxis, dataConfirm, dataHeal, dataDead) {
       text: '疫情新增趋势(人)'
     },
     legend: {
-      data: ['新增确诊', '新增治愈', '新增死亡'],
+      data: ['确诊', '治愈', '死亡'],
       top: '25',
       left: '0'
     },
@@ -319,19 +519,19 @@ export function buildLineProvince (xAxis, dataConfirm, dataHeal, dataDead) {
     },
     series: [
       {
-        name: '新增确诊',
+        name: '确诊',
         type: 'line',
         smooth: true,
         data: dataConfirm
       },
       {
-        name: '新增疑似',
+        name: '疑似',
         type: 'line',
         smooth: true,
         data: dataHeal
       },
       {
-        name: '新增死亡',
+        name: '死亡',
         type: 'line',
         smooth: true,
         data: dataDead

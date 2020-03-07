@@ -1,16 +1,16 @@
 <template>
-  <div id="prevent">
+  <div id="prevent" v-if="provincesList.length">
     <div class="title sectionTitle titleQg">
       <div class="statement-title">医疗救治医院查询</div>
       <div class="healthIcon"></div>
     </div>
-    <div v-for="item in provincesList" >
-      <div class="hotelItemWrap" province="${item.provinceName}" :class="{'current': isCityShow && currentCity === item.provinceName}" v-on:click="getCity(item.provinceName)">
+    <div v-for="(item, index) in provincesList" >
+      <div class="hotelItemWrap" province="${item.provinceName}" :class="{'current': currentList[index]}" v-on:click="getCity(index)" :key="item.provinceName">
         <div class="hotelProvince" data-province="${item.provinceName}" data-count="${item.cityCnt}">
           <div class="name">{{item.provinceName}}</div>
           <div class="count"></div>
         </div>
-        <div class="hotelCity" v-if="isCityShow && currentCity === item.provinceName" v-for="item1 in cityList">
+        <div class="hotelCity" v-if="currentList[index]" v-for="item1 in cityList[index]">
           <div class="name">{{item1.cityName}}</div>
           <div class="count">{{item1.count}}家<span>进入查询</span></div>
           <a class="healthlink" :href="item1.link.url"/>
@@ -85,8 +85,7 @@
     data() {
       return {
         provincesList:[],
-        isCityShow:false,
-        currentCity:'',
+        currentList:[],
         cityList:[],
       }
     },
@@ -99,24 +98,31 @@
             .then(res => {
               if (res.args.rsp.result.code == 0) {
                 this.provincesList = res.args.rsp.provinces;
+                this.provincesList.forEach(item =>{
+                  this.currentList.push(false);
+                  getHospitalCitydata(item.provinceName)
+                      .then(res=>{
+                        if (res.args.rsp.result.code == 0) {
+                          this.cityList.push(res.args.rsp.info.citys);
+                        }
+
+                      }).catch(function (error) { // 请求失败处理
+                    console.log(error);
+                  });
+                });
               }
             })
             .catch(function (error) { // 请求失败处理
               console.log(error);
             });
       },
-      getCity(province){
-        getHospitalCitydata(province)
-          .then(res=>{
-            if (res.args.rsp.result.code == 0) {
-              this.isCityShow = !this.isCityShow;
-              this.currentCity = province;
-              this.cityList = res.args.rsp.info.citys;
-            }
+      getCity(index){
+        let temp = this.currentList[index];
+        this.currentList.splice(index,1,!temp);
+        //let index = this.currentList.findIndex(ele => ele === province);
+        //if(index === -1) this.currentList.push(province);
+        //else this.currentList.splice(index,1);
 
-          }).catch(function (error) { // 请求失败处理
-          console.log(error);
-        });
       }
     }
   }
@@ -182,7 +188,7 @@
   .hotelProvince .name {
     height: 84px;
     line-height: 84px;
-    font-size: 32px;
+    font-size: 20px;
     color: #222;
     text-align: center;
     font-weight: 400;
@@ -191,7 +197,7 @@
     position: relative;
     height: 84px;
     line-height: 84px;
-    font-size: 32px;
+    font-size: 18px;
     color: #222;
     text-align: center;
     font-weight: 500;
@@ -233,7 +239,7 @@
   .hotelCity .name {
     height: 70px;
     line-height: 70px;
-    font-size: 26px;
+    font-size: 18px;
     color: #737373;
     text-align: center;
     font-weight: normal;
@@ -241,9 +247,8 @@
   .hotelCity .count {
     height: 70px;
     line-height: 70px;
-    font-size: 30px;
+    font-size: 18px;
     color: #096bff;
-    font-size: 24px;
     color: #737373;
     text-align: center;
     font-weight: normal;
@@ -308,7 +313,7 @@
 
   .p-fanghu {
     color: #222222;
-    font-size: 36px;
+    font-size: 28px;
     width: 100%;
     margin: 80px 0px 0px 0px;
     text-align: left;

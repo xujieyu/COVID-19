@@ -12,7 +12,8 @@ export function getHomeMultidata() {
 
 export function getLineMultidata() {
   return axios({
-    url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    url: 'http://193.112.19.128/Wuhan-2019-nCoV.json'
   })
 }
 
