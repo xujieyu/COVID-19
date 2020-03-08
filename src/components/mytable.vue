@@ -41,7 +41,7 @@
   .tabControl2
     background-color white
     position sticky
-    top 59px
+    top 40Px
 
   .tabControl3
     background-color white

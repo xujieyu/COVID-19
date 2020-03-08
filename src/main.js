@@ -3,7 +3,7 @@ import App from './App.vue'
 import VueResource from 'vue-resource'
 import router from "./router";
 import { Picker, Popup } from 'vant';
-import 'amfe-flexible'
+import './util/rem'
 import './assets/init.styl'
 import 'vant/lib/picker/style';
 

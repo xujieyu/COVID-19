@@ -46,7 +46,7 @@
         currentIndex: 0,
         hubeiIndex: 0,
         list1:['每日变化趋势','现有变化趋势','累计变化趋势'],
-        list2:['每日确诊对比','累计确诊对比','治愈对比','死亡对比'],
+        list2:['每日确诊','累计确诊','治愈病例','死亡病例'],
         chinaOption:{},
         chinaAddOption:{},
         hubeiOption:{},
@@ -191,7 +191,7 @@
               addNotHubei.push(notHubei[i] - notHubei[i-1]);
             }
           }
-          this.chinaOption = buildLineConfig(date, dataConfirm, dataSuspect, dataDead, dataHeal);
+          this.chinaOption = buildLineConfig(date, dataConfirm, dataDead, dataHeal);
           this.todayOption = buildTodayConfig(date,todayConfirm,todaySuspect);
           this.deadOption = buildHealConfig(date, dataHeal, dataDead);
           this.chinaAddOption = buildLineAdd(addDate,addConfirm,addSuspect,addDead,addHeal);

@@ -98,12 +98,13 @@
             .then(res => {
               if (res.args.rsp.result.code == 0) {
                 this.provincesList = res.args.rsp.provinces;
-                this.provincesList.forEach(item =>{
+                this.provincesList.forEach((item,index) =>{
                   this.currentList.push(false);
+                  this.cityList.push([]);
                   getHospitalCitydata(item.provinceName)
                       .then(res=>{
                         if (res.args.rsp.result.code == 0) {
-                          this.cityList.push(res.args.rsp.info.citys);
+                          this.cityList[index] = res.args.rsp.info.citys;
                         }
 
                       }).catch(function (error) { // 请求失败处理

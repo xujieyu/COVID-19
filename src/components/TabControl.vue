@@ -41,7 +41,8 @@
   .tab-control {
     display: flex;
     text-align: center;
-
+    height: 40Px;
+    line-height: 40Px;
     font-size: 24px;
     background-color: #fff;
     z-index: 9;
@@ -49,8 +50,7 @@
 
   .tab-control-item {
     flex: 1;
-    height: 40Px;
-    line-height: 40Px;
+
   }
 
   .tab-control-item span {

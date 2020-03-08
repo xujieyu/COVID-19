@@ -1,10 +1,10 @@
-export function buildLineConfig (xAxis, dataConfirm, dataSuspect, dataDead, dataHeal) {
+export function buildLineConfig (xAxis, dataConfirm, dataDead, dataHeal) {
   return {
     title: {
       text: '全国累计趋势(人)'
     },
     legend: {
-      data: ['确诊', '疑似', '治愈', '死亡'],
+      data: ['累计确诊', '累计治愈', '累计死亡'],
       top: '25',
       left: '0'
     },
@@ -43,12 +43,6 @@ export function buildLineConfig (xAxis, dataConfirm, dataSuspect, dataDead, data
         data: dataConfirm
       },
       {
-        name: '累计疑似',
-        type: 'line',
-        smooth: true,
-        data: dataSuspect
-      },
-      {
         name: '累计治愈',
         type: 'line',
         smooth: true,
@@ -70,7 +64,7 @@ export function buildTodayConfig (xAxis, dataConfirm, dataSuspect) {
       text: '现有确诊和疑似趋势(人)'
     },
     legend: {
-      data: ['确诊', '疑似'],
+      data: ['现有确诊', '现有疑似'],
       top: '25',
       left: '0'
     },
@@ -213,25 +207,25 @@ export function buildLineAdd (xAxis, dataConfirm, dataSuspect, dataDead, dataHea
     },
     series: [
       {
-        name: '较昨日确诊',
+        name: '确诊',
         type: 'line',
         smooth: true,
         data: dataConfirm
       },
       {
-        name: '较昨日疑似',
+        name: '疑似',
         type: 'line',
         smooth: true,
         data: dataSuspect
       },
       {
-        name: '较昨日治愈',
+        name: '治愈',
         type: 'line',
         smooth: true,
         data: dataHeal
       },
       {
-        name: '较昨日死亡',
+        name: '死亡',
         type: 'line',
         smooth: true,
         data: dataDead

@@ -7,12 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "amfe-flexible": "^2.2.1",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "core-js": "^3.6.4",
     "echarts": "^4.6.0",
     "jsonp": "^0.2.1",
+    "postcss-plugin-px2rem": "^0.8.1",
     "postcss-px-to-viewport": "^1.1.1",
     "postcss-px2rem": "^0.3.0",
     "px2rem-loader": "^0.1.9",
@@ -31,13 +31,5 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.6.11"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "postcss-px2rem": {
-        "remUnit": 37.5
-      }
-    }
   }
 }

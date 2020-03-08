@@ -7,6 +7,7 @@
 
 
 <style lang="stylus">
+  @imp
   #app
     background-color #215fb5
     font-family 'Avenir', Helvetica, Arial, sans-serif

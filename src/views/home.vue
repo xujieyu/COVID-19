@@ -327,7 +327,7 @@
     .tag
       height 35px
       line-height 35px
-      font-size 18px
+      font-size 20px
     .tip
       font-size 12px
       padding-top 10px
@@ -366,6 +366,7 @@
       flex 1
       text-align center
       overflow hidden
+
 
 
 
