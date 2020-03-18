@@ -120,9 +120,6 @@
       getCity(index){
         let temp = this.currentList[index];
         this.currentList.splice(index,1,!temp);
-        //let index = this.currentList.findIndex(ele => ele === province);
-        //if(index === -1) this.currentList.push(province);
-        //else this.currentList.splice(index,1);
 
       }
     }
@@ -350,7 +347,6 @@
     position: absolute;
   }
   .fanghu_item_text{
-    width: 490px;
     text-align:left;
     font-weight: normal;
     font-size: 16px;

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import {getHomeMultidata,getLineMultidata} from "../network/home";
+  import {getProvinceMultidata} from "../network/home";
   import mytable from "../components/mytable";
   import myMap from "../components/Map/myMap";
   import allLine from "../components/Line/allLine";
@@ -79,12 +79,10 @@
         this.$router.back();
       },
       getData(){
-        //getLineMultidata()
-        //    .then(res => {
-        let res = require("../data/resultView");
-              let province = this.$route.path.substr(1);
-              this.info.provinceName = getNameByPinyin(province);
-
+        let province = this.$route.path.substr(1);
+        this.info.provinceName = getNameByPinyin(province);
+        getProvinceMultidata(province)
+            .then(res => {
               let today = 0;
               let yesterday = 0;
               let be_yesterday = 0;
@@ -150,10 +148,10 @@
                   this.info.table.push(temp);
                 }
               });
-            //})
-            //.catch(function (error) { // 请求失败处理
-              //console.log(error);
-            //});
+            })
+            .catch(function (error) { // 请求失败处理
+              console.log(error);
+            });
       }
     },
     watch: {
@@ -168,86 +166,5 @@
 
 
 <style lang="stylus">
-  .photo
-    text-align left;
-    margin 0px 10px
-    height 150Px
-    background url("../img/virus.png") no-repeat
-    background-position right
-    background-size 140Px 140Px
 
-  .threed
-    font-size: 30Px;
-    font-weight: bold;
-    background-image: linear-gradient(#ede3e6, #79749b);
-    -webkit-background-clip: text;
-    color: transparent ;
-  .information
-    background-color: #fff;
-    position: relative;
-    border-radius: 10px;
-    margin: -10px 0 15px;
-    padding 10px 10px 18px;
-
-  .back
-    height: 28Px
-    line-height 28Px
-  .summary
-    display flex
-    padding  0 20px
-    justify-content space-between
-    .number
-      font-size 24px
-      font-weight bold
-      padding: 8px 5px 5px 5px
-    .small-number
-      font-size 12px
-    .tag
-      height 35px
-      line-height 35px
-      font-size 12px
-      font-weight bold
-    .tip
-      font-size 12px
-      padding-top 10px
-      color: #8B8989
-    .confirm
-      background-color #FDF1F1
-      border-radius 8px 0 0 8px
-      margin-right 2px
-      .tag
-        background-color #FFE0E0
-      .number, .small-number
-        color: #D81D1B
-    .suspect
-      background-color #FFF7ED
-      margin-right 2px
-      .tag
-        background-color #FFEED9
-      .number, .small-number
-        color: #F7AB1A
-    .heal
-      background-color #F1F8F4
-      margin-right 2px
-      .tag
-        background-color #DFEEE6
-      .number, .small-number
-        color: #178B50
-    .dead
-      background-color #F8F8F8
-      border-radius 0 8px 8px 0
-      .tag
-        background-color #EEEEEE
-      .number, .small-number
-        color: #66666C
-
-    > div
-      flex 1
-      text-align center
-      overflow hidden
-  // padding 15px 0
-  .tabControl2
-    background-color white
-    position sticky
-    top 0px
 </style>

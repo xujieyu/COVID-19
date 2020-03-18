@@ -48,7 +48,7 @@
               <van-picker show-toolbar title="选择城市" :columns="information.allselect" @cancel="onCancel" @confirm="onConfirm" @change="onChange" />
             </van-popup>
 
-            <van-popup v-model="isShow" position="center" closeable close-icon="close" :style="{width: '80%'}">
+            <van-popup v-model="isShow" position="center" closeable close-icon="close" style="width: 80%; height: 30%">
               <div style="text-align: left; font-size: 20px; padding-left: 2px ">
                 <div style="color: #2b70c7;">1. 数据来源：</div>
                 <div>数据同步获取自(<a href="https://github.com/canghailan/Wuhan-2019-nCoV">[Wuhan-2019-nCoV]</a>项目</div><br>
@@ -94,6 +94,7 @@
   import TabControl from "../components/TabControl";
   import hospital from "../components/hospital";
   import { getNameByPinyin, getPinyinByName, getName } from "../components/zhen"
+  import {getLineMultidata} from '../network/home'
   export default {
         name: "home",
         data () {
@@ -155,10 +156,10 @@
             this.isShow = true;
           },
           getData() {
-            //getLineMultidata()
-            //    .then(res => {
+            getLineMultidata()
+                .then(res => {
             this.information.province ='全国';
-            let res = require("../data/resultHome");
+            //let res = require("../data/resultHome");
             let today = 0;
             let yesterday = 0;
             let be_yesterday = 0;
@@ -210,10 +211,10 @@
               this.information.children.push(temp_children);
               this.information.mapInfo.push(temp_map);
             });
-                //})
-                //.catch(function (error) { // 请求失败处理
-                  //console.log(error);
-                //});
+                })
+                .catch(function (error) { // 请求失败处理
+                  console.log(error);
+                });
 
           }
         }
@@ -226,149 +227,6 @@
   [v-cloak] {
     display: none;
   }
-
-  .photo
-    text-align left;
-    margin 0px 10px
-    height 150Px
-    background url("../img/virus.png") no-repeat
-    background-position right
-    background-size 140Px 140Px
-
-  .threed
-    font-size: 30Px;
-    font-weight: bold;
-    background-image: linear-gradient(#ede3e6, #79749b);
-    -webkit-background-clip: text;
-    color: transparent ;
-
-  .information
-    background-color: #fff;
-    position: relative;
-    border-radius: 10px;
-    margin: -10px 0 15px;
-    padding 10px 10px 18px;
-
-  .back
-    height: 28Px
-    line-height 28Px
-
-  .total-statement
-    display: flex;
-    justify-content: space-between;
-    margin 15px 15px
-
-  .total-title
-    height: 28Px;
-    font-size 24px;
-    line-height 28Px;
-
-  .tabcotrol1
-    position sticky
-    top 0px
-  .navTabs
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-  .navTab
-    position: relative;
-    color: #000;
-    padding-bottom: .475rem;
-    border-bottom: 3px solid
-
-  #select-area
-    position: absolute;
-    top: 0;
-    right: 17px;
-    max-width: 100Px;
-    display: inline-block;
-    height: 28Px;
-    padding: 0 8px;
-    line-height: 28px;
-    opacity: .76;
-    background: #e5feff;
-    border-radius: 51px;
-    text-align: center;
-    font-size: 14px;
-    color: #104345;
-
-  .mapTitle
-    position: relative;
-    text-align: left;
-    font-size: 18px;
-    margin-top 15px;
-    padding  0 15px
-
-  .total-info
-    height: 28px;
-    line-height: 28px;
-
-  .qs
-    transform: translate(0, -50%);
-    top: 20px;
-    white-space: nowrap;
-    color: #737373;
-    font-size: 14px;
-    margin-left: 20px;
-    padding-left 15px;
-    background: url(https://mat1.gtimg.com/news/zhishiguan/page/icon_qs.png) no-repeat left center;
-    background-size: 12Px 12Px;
-
-  .summary
-    display: flex;
-    flex-wrap: wrap;
-    padding  20px 20px
-    .number
-      font-size 20px
-      font-weight bold
-      padding: 8px 5px 5px 5px
-    .small-number
-      font-size 12px
-    .tag
-      height 35px
-      line-height 35px
-      font-size 20px
-    .tip
-      font-size 12px
-      padding-top 10px
-      color: #8B8989
-    .confirm
-      background-color #FDF1F1
-      border-radius 8px 0 0 8px
-      margin-right 2px
-      .tag
-        background-color #fde4e1
-      .number, .small-number
-        color: #d84641
-    .suspect
-      background-color #FFF7ED
-      margin-right 2px
-      .tag
-        background-color #FFEED9
-      .number, .small-number
-        color: #F7AB1A
-    .heal
-      background-color #F1F8F4
-      margin-right 2px
-      .tag
-        background-color #DFEEE6
-      .number, .small-number
-        color: #49708b
-    .dead
-      background-color #F8F8F8
-      border-radius 0 8px 8px 0
-      .tag
-        background-color #EEEEEE
-      .number, .small-number
-        color: #66666C
-
-    > div
-      flex 1
-      text-align center
-      overflow hidden
-
-
-
 
 
 

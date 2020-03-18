@@ -3,10 +3,10 @@
 </template>
 
 <script>
-  import echarts from "../echarts";
   //import 'echarts/map/js/province/henan.js';
   //import option from "./config_map.js";
-  import {getHomeMultidata, getLineMultidata} from "../../network/home";
+  //import echarts from 'echarts'
+  import {getChinaJsonData, getProvinceJsonData} from "../../network/home";
   import buildMapConfig from "./config_map";
   import { getNameByPinyin, getPinyinByName } from "../zhen"
   export default {
@@ -26,26 +26,36 @@
     },
     methods:{
       mapEchartsInit(){
-        //getLineMultidata()
-          //  .then(res => {
-        //let res = require('../../data/Wuhan-2019-nCoV');
-              let myChart=echarts.init(this.$refs.map);
               const provincePinyin = getPinyinByName(this.mapProvince);
+        let myChart= echarts.init(this.$refs.map);
               if (this.mapProvince == '全国') {
-                require('echarts/map/js/china.js');
+                getChinaJsonData()
+                    .then(res => {
+                //let dataJson = require('../../data/china.json');
+                myChart.hideLoading();
+                echarts.registerMap('china', res);
+
+                //require();
                 let option = buildMapConfig('', this.mapValue);
-                myChart.hideLoading();
                 myChart.setOption(option);
+                    })
+                    .catch(function (error) { // 请求失败处理
+                      console.log(error);
+                    });
               } else {
-                require(`echarts/map/js/province/${provincePinyin}.js`);
-                let option = buildMapConfig(this.mapProvince, this.mapValue);
+                getProvinceJsonData(provincePinyin)
+                    .then(res => {
+                //let dataJson = require('../../data/province/' + provincePinyin + '.json');
                 myChart.hideLoading();
+                echarts.registerMap(provincePinyin, res);
+                //require(`echarts/map/js/province/${provincePinyin}.js`);
+                let option = buildMapConfig(provincePinyin, this.mapValue);
                 myChart.setOption(option);
+                    })
+                    .catch(function (error) { // 请求失败处理
+                      console.log(error);
+                    });
               }
-            //})
-            //.catch(function (error) { // 请求失败处理
-              //console.log(error);
-            //});
       }
     }
   }

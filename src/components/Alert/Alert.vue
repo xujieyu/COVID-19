@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style lang="stylus">
+
 $dialog-bg = #F4F4F4
 $dialog-title-height = 60px
 $dialog-btn-height = 40px

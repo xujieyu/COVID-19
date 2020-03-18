@@ -4,16 +4,39 @@ import qs from 'qs'
 export const BANNER = 'banner'
 export const RECOMMEND = 'recommend'
 
-export function getHomeMultidata() {
-  return axios({
-    url: 'api/g2/getOnsInfo?name=disease_h5'
-  })
-}
 
 export function getLineMultidata() {
   return axios({
     //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
-    url: 'http://193.112.19.128/Wuhan-2019-nCoV.json'
+    url: 'https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/resultHome.json'
+  })
+}
+
+export function getProvinceMultidata(provinceName) {
+  return axios({
+    //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    url: 'https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/province/'+ provinceName + '.json'
+  })
+}
+
+export function getHubeiMultidata() {
+  return axios({
+    //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    url: 'https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/resultHubei.json'
+  })
+}
+
+export function getChinaJsonData() {
+  return axios({
+    //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    url: 'https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/map/china.json'
+  })
+}
+
+export function getProvinceJsonData(provinceName) {
+  return axios({
+    //url: 'https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.json'
+    url: 'https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/map/province/'+ provinceName + '.json'
   })
 }
 

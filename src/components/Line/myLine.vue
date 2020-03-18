@@ -3,7 +3,6 @@
 </template>
 
 <script>
-  import echarts from "echarts";
   import {getHomeMultidata} from "../../network/home";
   import {buildLineConfig} from "./config_line"
   //import option from "./config_line";
