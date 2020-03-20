@@ -1,6 +1,6 @@
 <template>
-  <div id="allLine">
-    <div v-if="province == '全国'">
+  <div id="tabTrend">
+    <div v-if="childInfo.provinceName == '全国'">
       <div class="myLine" ref="map" ></div>
       <div class="china-info">
         <div class="china-item"
@@ -21,25 +21,25 @@
       </div>
 
     </div>
-    <div v-else="province != '全国'">
+    <div v-else="childInfo.provinceName != '全国'">
       <div class="myLine" ref="map11" ></div>
     </div>
 
 
   </div>
-  
+
 </template>
 
 <script>
-  import {getLineMultidata, getProvinceMultidata, getHubeiMultidata} from '../../network/home';
+  import {getLineMultidata, getProvinceMultidata, getHubeiMultidata} from '../network/home';
   import {buildLineConfig,buildLineAdd,buildLineAHubei,buildHealConfig,buildAddHubei,buildLineProvince,buildTodayConfig,buildDeadHubei,buildHealHubei} from "./config_line"
-  import {getPinyinByName} from "../zhen";
+  import {getPinyinByName} from "../network/zhen";
   export default {
-    name: "allLine",
+    name: "tabTrend",
     props: {
-      province: {
-        type: String,
-        default: '全国'
+      childInfo:{
+        type: Object,
+        default: {}
       }
     },
     data() {
@@ -111,10 +111,9 @@
         }
       },
       mapEchartsInit() {
-        if (this.province == '全国') {
+        if (this.childInfo.provinceName == '全国') {
           getHubeiMultidata()
               .then(res => {
-                if (this.province == '全国') {
                   let date = [];
                   let dataConfirm = [];
                   let dataSuspect = [];
@@ -199,14 +198,13 @@
 
                   this.hubeiDeadOption = buildDeadHubei(hubeiDate, hubeiAllDead, hubeiDead, notHubeiDead);
                   this.hubeiHealOption = buildHealHubei(hubeiDate, hubeiAllHeal, hubeiHeal, notHubeiHeal);
-                }
               })
               .catch(function (error) { // 请求失败处理
                 console.log(error);
               });
         }
-        if (this.province != '全国') {
-          getProvinceMultidata(getPinyinByName(this.province))
+        if (this.childInfo.provinceName != '全国') {
+          getProvinceMultidata(getPinyinByName(this.childInfo.provinceName))
               .then(res => {
                 let provinceDate = [];
                 let provinceConfirm = [];
@@ -214,8 +212,8 @@
                 let provinceDead = [];
                 let provinceHeal = [];
                 res.forEach(item => {
-                  if (this.province === '黑龙江' || this.province === '内蒙古') {
-                    if (item.countryCode === "CN" && item.province.substring(0, 3) === this.province && item.city === '') {
+                  if (this.childInfo.provinceName === '黑龙江' || this.childInfo.provinceName === '内蒙古') {
+                    if (item.countryCode === "CN" && item.province.substring(0, 3) === this.childInfo.provinceName && item.city === '') {
                       provinceDate.push(item.date);
                       provinceConfirm.push(item.confirmed);
                       provinceSuspect.push(item.suspected);
@@ -223,7 +221,7 @@
                       provinceDead.push(item.dead);
                     }
                   } else {
-                    if (item.countryCode === "CN" && item.province.substring(0, 2) === this.province && item.city === '') {
+                    if (item.countryCode === "CN" && item.province.substring(0, 2) === this.childInfo.provinceName && item.city === '') {
                       provinceDate.push(item.date);
                       provinceConfirm.push(item.confirmed);
                       provinceSuspect.push(item.suspected);
@@ -275,8 +273,8 @@
 </script>
 
 <style scoped>
-  #allLine {
-    padding:  15px 15px;
+  #tabTrend{
+
   }
 
   .china-info{

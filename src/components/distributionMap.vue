@@ -3,14 +3,11 @@
 </template>
 
 <script>
-  //import 'echarts/map/js/province/henan.js';
-  //import option from "./config_map.js";
-  //import echarts from 'echarts'
-  import {getChinaJsonData, getProvinceJsonData} from "../../network/home";
+  import {getChinaJsonData, getProvinceJsonData} from "../network/home";
   import buildMapConfig from "./config_map";
-  import { getNameByPinyin, getPinyinByName } from "../zhen"
+  import { getNameByPinyin, getPinyinByName } from "../network/zhen"
   export default {
-    name: "myMap",
+    name: "distributionMap",
     props:{
       mapProvince: {
         type: String,
@@ -26,36 +23,35 @@
     },
     methods:{
       mapEchartsInit(){
-              const provincePinyin = getPinyinByName(this.mapProvince);
-        let myChart= echarts.init(this.$refs.map);
-              if (this.mapProvince == '全国') {
-                getChinaJsonData()
-                    .then(res => {
-                //let dataJson = require('../../data/china.json');
-                myChart.hideLoading();
+        const provincePinyin = getPinyinByName(this.mapProvince);
+        if (this.mapProvince == '全国') {
+          getChinaJsonData()
+              .then(res => {
                 echarts.registerMap('china', res);
-
-                //require();
                 let option = buildMapConfig('', this.mapValue);
+                console.log(option);
+                let myChart= echarts.init(this.$refs.map);
+                myChart.hideLoading();
                 myChart.setOption(option);
-                    })
-                    .catch(function (error) { // 请求失败处理
-                      console.log(error);
-                    });
-              } else {
-                getProvinceJsonData(provincePinyin)
-                    .then(res => {
+              })
+              .catch(function (error) { // 请求失败处理
+                console.log(error);
+              });
+        } else {
+          getProvinceJsonData(provincePinyin)
+              .then(res => {
                 //let dataJson = require('../../data/province/' + provincePinyin + '.json');
+                let myChart= echarts.init(this.$refs.map);
                 myChart.hideLoading();
                 echarts.registerMap(provincePinyin, res);
                 //require(`echarts/map/js/province/${provincePinyin}.js`);
                 let option = buildMapConfig(provincePinyin, this.mapValue);
                 myChart.setOption(option);
-                    })
-                    .catch(function (error) { // 请求失败处理
-                      console.log(error);
-                    });
-              }
+              })
+              .catch(function (error) { // 请求失败处理
+                console.log(error);
+              });
+        }
       }
     }
   }
@@ -73,7 +69,7 @@
     border-collapse: collapse;
 
   }
-[v-cloak] {
-  display: none;
-}
+  [v-cloak] {
+    display: none;
+  }
 </style>

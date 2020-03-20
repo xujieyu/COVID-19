@@ -13,11 +13,6 @@ module.exports = {
   configureWebpack:{
     externals: {
       echarts: 'echarts',
-      lodash : {
-        commonjs: 'lodash',
-        amd: 'lodash',
-        root: '_' // 指向全局变量
-      }
     },
   },
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
@@ -63,7 +58,6 @@ module.exports = {
       }
     })
   },
-
   lintOnSave: true,
     css: {
       loaderOptions: {
