@@ -23,8 +23,9 @@ npm run serve
 npm run build
 ```
 ## 性能测试
-
-
+使用loadimpact测试网站的负载能力，该测试工具从10个客户端逐步增加了50个客户端来对用户网站的负载能力进行测试
+![](https://note.youdao.com/yws/public/resource/ccbd697e0a33b78d122fe94174b7166d/xmlnote/28C8047F624E41ABA92533AB8B5E4A0E/3870)
+这个网站平均响应时间是698ms,响应时间还是比较快的。
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
