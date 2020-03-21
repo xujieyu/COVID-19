@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <div class="tab-control">
+    <div class="tab-control" :class="{'floatType': isFloat}">
       <div class="tab-control-item"
            v-for="(tab,index) in tabs"
            v-bind:key="tab.name"
@@ -48,6 +48,7 @@
     },
     data() {
       return {
+        isFloat: false,
         currentTab: 'detail',
         tabs: [
           {
@@ -102,8 +103,15 @@
       },
       handleScroll () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+        let TabId = document.querySelector('.tab-control');
         let Page1Id = document.querySelector('#page1' );
         let Page2Id = document.querySelector('#page2');
+        if(scrollTop >= TabId.offsetTop){
+          this.isFloat = true;
+        }
+        else if(scrollTop < TabId.offsetTop){
+          this.isFloat = false;
+        }
         if(scrollTop < (Page1Id.offsetTop - 40)){
           this.currentTab = this.tabs[0].name;
         }
@@ -143,6 +151,14 @@
       span
         border-bottom 2px solid #2b70c7
 
+  .floatType
+    background-color #2b70c7
+    .tab-control-item
+      color #fff
+    .active
+      color #fff
+      span
+        border-bottom 2px solid #fff
 
   .tabControl2
     top 40px
