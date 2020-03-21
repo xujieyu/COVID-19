@@ -11,11 +11,13 @@ function setRem () {
   var deviceWidth = document.documentElement.clientWidth || window.innerWidth;
   if (deviceWidth >= 750) {
     deviceWidth = 750;
+    document.documentElement.style.fontSize = (deviceWidth / 50) + 'px';
   }
   if (deviceWidth <= 320) {
     deviceWidth = 320;
+    document.documentElement.style.fontSize = (deviceWidth / 30) + 'px';
   }
-  document.documentElement.style.fontSize = (deviceWidth / 30) + 'px';
+
 
 }
 // 初始化

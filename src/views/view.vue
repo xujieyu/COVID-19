@@ -16,9 +16,6 @@
     name: "view",
     data () {
       return {
-        currentType:0,
-        show: false,
-        isShow: false,
         information:{
           provinceName: '全国',
           updateTime: '',

@@ -61,7 +61,7 @@
   #myMap {
     table-layout: fixed;
     width: 100%;
-    height:600px;
+    height:500px;
     padding:  0 15px;
     text-align: center;
     border-spacing: 2px 6px;
