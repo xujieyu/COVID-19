@@ -9,14 +9,15 @@ function _isMobile() {
 function setRem () {
   // 当前页面宽度相对于 1920宽的缩放比例，可根据自己需要修改。
   var deviceWidth = document.documentElement.clientWidth || window.innerWidth;
-  if (deviceWidth >= 750) {
-    deviceWidth = 750;
-    document.documentElement.style.fontSize = (deviceWidth / 50) + 'px';
+  if (deviceWidth >= 500) {
+    deviceWidth = 500;
   }
   if (deviceWidth <= 320) {
     deviceWidth = 320;
-    document.documentElement.style.fontSize = (deviceWidth / 30) + 'px';
   }
+  document.documentElement.style.fontSize = (deviceWidth / 30) + 'px';
+
+
 
 
 }

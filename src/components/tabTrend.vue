@@ -114,90 +114,23 @@
         if (this.childInfo.provinceName == '全国') {
           getHubeiMultidata()
               .then(res => {
-                  let date = [];
-                  let dataConfirm = [];
-                  let dataSuspect = [];
-                  let dataDead = [];
-                  let dataHeal = [];
-                  let todayConfirm = [];
-                  let todaySuspect = [];
-                  let addDate = [];
-                  let addConfirm = [];
-                  let addSuspect = [];
-                  let addDead = [];
-                  let addHeal = [];
-                  let hubeiAllConfirm = [];
-                  let hubeiAddConfirm = [];
-                  let hubeiAllDead = [];
-                  let hubeiAllHeal = [];
-                  let hubeiDate = [];
-                  let hubei = [];
-                  let notHubei = [];
-                  let hubeiDead = [];
-                  let notHubeiDead = [];
-                  let hubeiHeal = [];
-                  let notHubeiHeal = [];
-                  let addHubeiDate = [];
-                  let addHubei = [];
-                  let addNotHubei = [];
-                  res.forEach(item => {
-                    if (item.countryCode == "CN" && item.provinceCode == '') {
-                      date.push(item.date);
-                      dataConfirm.push(item.confirmed);
-                      dataSuspect.push(item.suspected);
-                      dataDead.push(item.dead);
-                      dataHeal.push(item.cured);
-                      todayConfirm.push(item.confirmed - item.dead - item.cured);
-                      todaySuspect.push(item.suspected);
-                    }
-                    if (item.countryCode == "CN" && item.provinceCode == '420000' && item.city == '') {
-                      hubeiDate.push(item.date);
-                      hubei.push(item.confirmed);
-                      hubeiDead.push(item.dead);
-                      hubeiHeal.push(item.cured);
-                    }
-                  });
-                  for (let i = 1; i < date.length; i = i + 1) {
-                    addDate.push(date[i]);
-                    addConfirm.push(dataConfirm[i] - dataConfirm[i - 1]);
-                    addSuspect.push(dataSuspect[i] - dataSuspect[i - 1]);
-                    addDead.push(dataDead[i] - dataDead[i - 1]);
-                    addHeal.push(dataHeal[i] - dataHeal[i - 1]);
-                  }
-
-                  for (let i = 0; i < hubeiDate.length; i = i + 1) {
-                    let index = date.findIndex(ele => ele === hubeiDate[i]);
-                    notHubei.push(dataConfirm[index] - hubei[i]);
-                    notHubeiDead.push(dataDead[index] - hubeiDead[i]);
-                    notHubeiHeal.push(dataHeal[index] - hubeiHeal[i]);
-                    hubeiAddConfirm.push(addConfirm[index]);
-                    hubeiAllConfirm.push(dataConfirm[index]);
-                    hubeiAllDead.push(dataDead[index]);
-                    hubeiAllHeal.push(dataHeal[index]);
-                    if (i > 0) {
-                      addHubeiDate.push(hubeiDate[i]);
-                      addHubei.push(hubei[i] - hubei[i - 1]);
-                      addNotHubei.push(notHubei[i] - notHubei[i - 1]);
-                    }
-                  }
-                  this.chinaOption = buildLineConfig(date, dataConfirm, dataDead, dataHeal);
-                  this.todayOption = buildTodayConfig(date, todayConfirm, todaySuspect);
-                  this.deadOption = buildHealConfig(date, dataHeal, dataDead);
-                  this.chinaAddOption = buildLineAdd(addDate, addConfirm, addSuspect, addDead, addHeal);
-                  this.hubeiOption = buildLineAHubei(hubeiDate, hubeiAllConfirm, hubei, notHubei);
+                  this.chinaOption = buildLineConfig(res.chinaOption.date, res.chinaOption.confirm, res.chinaOption.dead, res.chinaOption.heal);
+                  this.todayOption = buildTodayConfig(res.todayOption.date, res.todayOption.confirm, res.todayOption.suspect);
+                  this.deadOption = buildHealConfig(res.todayOption.date, res.todayOption.heal, res.todayOption.dead);
+                  this.chinaAddOption = buildLineAdd(res.chinaAddOption.date, res.chinaAddOption.confirm, res.chinaAddOption.suspect, res.chinaAddOption.dead, res.chinaAddOption.heal);
+                  this.hubeiOption = buildLineAHubei(res.hubeiConfirmOption.date, res.hubeiConfirmOption.allConfirm, res.hubeiConfirmOption.hubeiConfirm, res.hubeiConfirmOption.notHubeiConfirm);
                   let myChart1 = echarts.init(this.$refs.map);
                   myChart1.hideLoading();
                   myChart1.setOption(this.chinaAddOption);
 
-
                   //map4
-                  this.addHubeiOption = buildAddHubei(addHubeiDate, hubeiAddConfirm, addHubei, addNotHubei);
+                  this.addHubeiOption = buildAddHubei(res.hubeiAddConfirmOption.date, res.hubeiAddConfirmOption.allConfirm, res.hubeiAddConfirmOption.hubeiConfirm, res.hubeiAddConfirmOption.notHubeiConfirm);
                   let myChart4 = echarts.init(this.$refs.map2);
                   myChart4.hideLoading();
                   myChart4.setOption(this.addHubeiOption);
 
-                  this.hubeiDeadOption = buildDeadHubei(hubeiDate, hubeiAllDead, hubeiDead, notHubeiDead);
-                  this.hubeiHealOption = buildHealHubei(hubeiDate, hubeiAllHeal, hubeiHeal, notHubeiHeal);
+                  this.hubeiDeadOption = buildDeadHubei(res.hubeiDeadOption.date, res.hubeiDeadOption.allDead, res.hubeiDeadOption.hubeiDead, res.hubeiDeadOption.notHubeiDead);
+                  this.hubeiHealOption = buildHealHubei(res.hubeiHealOption.date, res.hubeiHealOption.allHeal, res.hubeiHealOption.hubeiHeal, res.hubeiHealOptionnotHubeiHeal);
               })
               .catch(function (error) { // 请求失败处理
                 console.log(error);
@@ -206,50 +139,10 @@
         if (this.childInfo.provinceName != '全国') {
           getProvinceMultidata(getPinyinByName(this.childInfo.provinceName))
               .then(res => {
-                let provinceDate = [];
-                let provinceConfirm = [];
-                let provinceSuspect = [];
-                let provinceDead = [];
-                let provinceHeal = [];
-                res.forEach(item => {
-                  if (this.childInfo.provinceName === '黑龙江' || this.childInfo.provinceName === '内蒙古') {
-                    if (item.countryCode === "CN" && item.province.substring(0, 3) === this.childInfo.provinceName && item.city === '') {
-                      provinceDate.push(item.date);
-                      provinceConfirm.push(item.confirmed);
-                      provinceSuspect.push(item.suspected);
-                      provinceHeal.push(item.cured);
-                      provinceDead.push(item.dead);
-                    }
-                  } else {
-                    if (item.countryCode === "CN" && item.province.substring(0, 2) === this.childInfo.provinceName && item.city === '') {
-                      provinceDate.push(item.date);
-                      provinceConfirm.push(item.confirmed);
-                      provinceSuspect.push(item.suspected);
-                      provinceHeal.push(item.cured);
-                      provinceDead.push(item.dead);
-                    }
-                  }
-
-                });
-
-
-                let provinceAddConfirm = [];
-                //provinceAddConfirm.push(provinceConfirm[0]);
-                let provinceAddSuspect = [];
-                //provinceAddSuspect.push(provinceSuspect[0]);
-                let provinceAddDead = [];
-                //provinceAddDead.push(provinceDead[0]);
-                let provinceAddHeal = [];
-                //provinceAddHeal.push(provinceHeal[0]);
-                console.log(provinceDate.length);
-                for (let i = 1; i < provinceDate.length; i = i + 1) {
-                  provinceAddConfirm.push(provinceConfirm[i] - provinceConfirm[i - 1]);
-                  provinceAddSuspect.push(provinceSuspect[i] - provinceSuspect[i - 1]);
-                  provinceAddHeal.push(provinceHeal[i] - provinceHeal[i - 1]);
-                  provinceAddDead.push(provinceDead[i] - provinceDead[i - 1]);
-                }
-                ;
-                provinceDate.splice(0, 1);
+                let provinceDate = res.province_add_info.provinceDate;
+                let provinceAddConfirm = res.province_add_info.provinceAddConfirm;
+                let provinceAddDead = res.province_add_info.provinceAddDead;
+                let provinceAddHeal = res.province_add_info.provinceAddHeal;
                 this.provinceOption = buildLineProvince(provinceDate, provinceAddConfirm, provinceAddHeal, provinceAddDead);
                 let myChart11 = echarts.init(this.$refs.map11);
                 myChart11.hideLoading();
