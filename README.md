@@ -20,7 +20,7 @@
 - 获取全国/湖北/非湖北每日数据变化来绘制对比曲线
 - 获取各省每日数据变化来绘制变化曲线
 
-[数据处理代码地址]()
+[数据处理代码地址](https://github.com/xujieyu/getCOVIDJson)
 
 ## 页面优化方式
 首先安装webpack-bundle-analyzer插件来查看哪些文件比较大
