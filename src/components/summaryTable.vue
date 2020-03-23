@@ -9,7 +9,6 @@
         <citySelection :items="allSelect" @selectedCity="selectedCity"></citySelection>
       </div>
       <dataSource v-bind:show="isOpenDataSource" @openShow="closeDataSource"></dataSource>
-
       <div v-if="province === '全国'">
         <div class="summary">
           <div class="confirm item">
@@ -103,6 +102,9 @@
         isOpenDataSource: false,
       }
     },
+    mounted() {
+      window.addEventListener('scroll', this.changeWidth)
+    },
     methods: {
       openDataSource() {
         this.isOpenDataSource = true;
@@ -114,6 +116,9 @@
         console.log(data);
         this.currentCity = data;
         this.$emit('selectChange', data);
+      },
+      changeWidth(){
+
       }
     }
   }
@@ -161,7 +166,7 @@
       white-space: nowrap
       color: #737373
       margin-left: 1px
-      padding-left 15px
+      padding-left 16px
       background: url(https://mat1.gtimg.com/news/zhishiguan/page/icon_qs.png) no-repeat left center
       background-size: 12Px 12Px
 

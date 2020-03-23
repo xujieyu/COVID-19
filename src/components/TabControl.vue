@@ -1,7 +1,7 @@
 <!-- 控制显示的 Tab-->
 
 <template>
-  <div>
+  <div id="tab-control">
     <div class="tab-control" :class="{'floatType': isFloat}">
       <div class="tab-control-item"
            v-for="(tab,index) in tabs"
@@ -50,6 +50,7 @@
       return {
         isFloat: false,
         currentTab: 'detail',
+        tabTopOffset: 0,
         tabs: [
           {
             name: 'detail',
@@ -87,7 +88,9 @@
       }
     },
     mounted() {
+      this.tabTopOffset = document.querySelector('.tab-control').offsetTop;
       window.addEventListener('scroll', this.handleScroll)
+
     },
     methods:{
       selectCity(city){
@@ -106,10 +109,10 @@
         let TabId = document.querySelector('.tab-control');
         let Page1Id = document.querySelector('#page1' );
         let Page2Id = document.querySelector('#page2');
-        if(scrollTop >= TabId.offsetTop){
+        if(scrollTop > this.tabTopOffset){
           this.isFloat = true;
         }
-        else if(scrollTop < TabId.offsetTop){
+        else{
           this.isFloat = false;
         }
         if(scrollTop < (Page1Id.offsetTop - 40)){
@@ -129,7 +132,7 @@
 <style lang="stylus">
   .tab-control
     position sticky
-    top 0px
+    top 0
     display flex
     text-align center
     height 40px

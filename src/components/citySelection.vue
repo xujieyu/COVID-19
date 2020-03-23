@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div id="city-selection">
     <button class="switch-city-btn" @click="openSwitchCity">切换城市</button>
-    <van-popup v-model="isOpen" position="bottom">
+    <van-popup class="popup-picker" :style="{width: ''+ picker_width + 'px'}" v-model="isOpen" position="bottom" get-container="#index">
       <van-picker class="picker"
                   show-toolbar
                   title="选择城市"
                   :overlay="false"
                   :columns="items"
-                  :style="{ height: '500px'}"
+                  :style="{ height: '400px',width: ''+ picker_width + 'px'}"
                   @cancel="onCancel"
                   @confirm="onConfirm"
                   @change="onChange"/>
@@ -26,13 +26,18 @@
     },
     data() {
       return {
-        isOpen: false
+        isOpen: false,
+        picker_width: 0,
       }
     },
     watch: {
       show(val) {
         this.isOpen = val
       }
+    },
+    mounted() {
+      let index_width = document.getElementById('tab-control');
+      this.picker_width = index_width.offsetWidth;
     },
     methods: {
       openSwitchCity() {
@@ -64,5 +69,16 @@
   .picker .van-picker__title,
   .picker .van-picker__cancel
     font-size 20px !important
+  .van-overlay {
+    position: absolute;
+  }
+  .van-popup {
+    position: absolute;
+  }
+  .popup-picker
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
 
 </style>
