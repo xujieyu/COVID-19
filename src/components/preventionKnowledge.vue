@@ -25,7 +25,7 @@
       return {
         all_knowledge: [
           {
-            icon: "https://puui.qpic.cn/vupload/0/1580113954413_67dj6qw9r34.png/0",
+            icon: "https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/1.png",
             title: "个人清洁",
             items: [
               "经常保持双手清洁，尤其在触摸口、鼻或眼之前。",
@@ -34,7 +34,7 @@
             ],
           },
           {
-            icon: "https://puui.qpic.cn/vupload/0/1580113954413_b3dr1w759hr.png/0",
+            icon: "https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/2.png",
             title: "尽量避免",
             items: [
               "减少前往人流密集的场所。如不可避免，应戴上外科口罩。",
@@ -45,7 +45,7 @@
             ],
           },
           {
-            icon: "https://puui.qpic.cn/vupload/0/1580113954413_qs8jz3v8m7.png/0",
+            icon: "https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/3.png",
             title: "尽快就诊",
             items: [
               "如有身体不适，特别是有发烧或咳嗽，应戴上外科口罩并尽快就诊。",

@@ -9,26 +9,6 @@
     <script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js"></script>
   </head>
   <body>
-    <script>
-      //let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
-      //console.log('htmlWidth',htmlWidth)
-      //let htmlDom = document.getElementsByTagName('html')[0];
-      //htmlDom.style.fontSize = htmlWidth / 40 + 'px';
-      fnResize();
-      window.onresize = function () {
-        fnResize();
-      }
-      function fnResize() {
-        var deviceWidth = document.documentElement.clientWidth || window.innerWidth;
-        if (deviceWidth >= 750) {
-          deviceWidth = 750;
-        }
-        if (deviceWidth <= 320) {
-          deviceWidth = 320;
-        }
-        document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px';
-      }
-    </script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

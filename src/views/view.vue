@@ -8,8 +8,7 @@
 <script>
   import headerDiagram from "../components/headerDiagram"
   import tabControl from "../components/tabControl"
-  import preventionKnowledge from "../components/preventionKnowledge";
-  import {getLineMultidata,getProvinceMultidata} from "../network/home";
+  import {getProvinceMultidata} from "../network/home";
   import {getName,getPinyinByName,getNameByPinyin} from "../network/zhen";
 
   export default {

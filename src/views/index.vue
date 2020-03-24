@@ -8,8 +8,7 @@
 <script>
   import headerDiagram from "../components/headerDiagram"
   import tabControl from "../components/tabControl"
-  import preventionKnowledge from "../components/preventionKnowledge";
-  import {getLineMultidata,getProvinceMultidata} from "../network/home";
+  import {getLineMultidata} from "../network/home";
   import {getName,getPinyinByName} from "../network/zhen";
 
   export default {
@@ -33,7 +32,6 @@
     components: {
       headerDiagram,
       tabControl,
-
     },
     created () {
       this.getData();
@@ -55,7 +53,7 @@
       },
       changeCity(city){
         this.information.provinceName = city;
-        if(city != '全国'){
+        if(city !== '全国'){
           let provincePinyin = getPinyinByName(this.information.provinceName);
           this.$router.push(`/${provincePinyin}`)
         }

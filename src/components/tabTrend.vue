@@ -1,6 +1,6 @@
 <template>
   <div id="tabTrend">
-    <div v-if="childInfo.provinceName == '全国'">
+    <div v-if="childInfo.provinceName === '全国'">
       <div class="myLine" ref="map" ></div>
       <div class="china-info">
         <div class="china-item"
@@ -21,7 +21,7 @@
       </div>
 
     </div>
-    <div v-else="childInfo.provinceName != '全国'">
+    <div v-else>
       <div class="myLine" ref="map11" ></div>
     </div>
 
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import {getLineMultidata, getProvinceMultidata, getHubeiMultidata} from '../network/home';
+  import {getProvinceMultidata, getHubeiMultidata} from '../network/home';
   import {buildLineConfig,buildLineAdd,buildLineAHubei,buildHealConfig,buildAddHubei,buildLineProvince,buildTodayConfig,buildDeadHubei,buildHealHubei} from "./config_line"
   import {getPinyinByName} from "../network/zhen";
   export default {
@@ -111,7 +111,7 @@
         }
       },
       mapEchartsInit() {
-        if (this.childInfo.provinceName == '全国') {
+        if (this.childInfo.provinceName === '全国') {
           getHubeiMultidata()
               .then(res => {
                   this.chinaOption = buildLineConfig(res.chinaOption.date, res.chinaOption.confirm, res.chinaOption.dead, res.chinaOption.heal);
@@ -136,7 +136,7 @@
                 console.log(error);
               });
         }
-        if (this.childInfo.provinceName != '全国') {
+        if (this.childInfo.provinceName !== '全国') {
           getProvinceMultidata(getPinyinByName(this.childInfo.provinceName))
               .then(res => {
                 let provinceDate = res.province_add_info.provinceDate;
@@ -152,23 +152,12 @@
                 console.log(error);
               });
         }
-
-
-        //})
-        //.catch(function (error) { // 请求失败处理
-        //console.log(error);
-        //});
-        // })
-
       }
     }
   }
 </script>
 
 <style scoped>
-  #tabTrend{
-
-  }
 
   .china-info{
     display: flex;

@@ -45,14 +45,14 @@
       getData(){
         getHospitalMultidata()
             .then(res => {
-              if (res.args.rsp.result.code == 0) {
+              if (res.args.rsp.result.code === 0) {
                 this.provincesList = res.args.rsp.provinces;
                 this.provincesList.forEach((item,index) =>{
                   this.currentList.push(false);
                   this.cityList.push([]);
                   getHospitalCitydata(item.provinceName)
                       .then(res=>{
-                        if (res.args.rsp.result.code == 0) {
+                        if (res.args.rsp.result.code === 0) {
                           this.cityList[index] = res.args.rsp.info.citys;
                         }
 
@@ -76,8 +76,6 @@
 </script>
 
 <style lang="stylus">
-  /*#prevent*/
-  /*  max-width 750px*/
 
   .section-title
     display flex
@@ -99,7 +97,7 @@
       right 10px
       width 220px
       height 70px
-      background url('https://puui.qpic.cn/vupload/0/1580302315181_7z5pmnq6q4c.png/0')
+      background url('https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/icon_health.png')
       background-size 100% 100%
 
   .hotel-item-wrap

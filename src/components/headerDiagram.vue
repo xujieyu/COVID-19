@@ -2,7 +2,7 @@
   <div class="photo data-statement">
     <div class="name-title">新型冠状病毒</div>
     <div class="monitor-title"><span>肺炎疫情实时监控</span></div>
-    <div class="update-time">截止 {{time}}</div>
+    <div class="update-time">截止 {{'2020-' + time}}</div>
   </div>
 </template>
 

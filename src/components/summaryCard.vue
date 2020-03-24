@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tip">昨日
+    <div class="tip" v-if="isShow">昨日
       <span class="small-number">
       <span v-if="increase > 0">+</span>
       {{increase}}
@@ -14,7 +14,7 @@
 <script>
   export default {
     name: "summaryCard",
-    props: ['title', 'total', 'increase'],
+    props: ['title', 'total', 'increase','isShow'],
     data() {
       return {}
     }

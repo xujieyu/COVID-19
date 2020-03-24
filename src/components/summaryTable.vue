@@ -12,36 +12,32 @@
       <div v-if="province === '全国'">
         <div class="summary">
           <div class="confirm item">
-            <summaryCard title="确诊" v-bind:increase=chinaInfo.china_add.confirmed v-bind:total=chinaInfo.china_total.confirmed></summaryCard>
+            <summaryCard :is-show= true title="确诊" v-bind:increase=chinaInfo.china_add.confirmed v-bind:total=chinaInfo.china_total.confirmed></summaryCard>
           </div>
           <div class="suspect item">
-            <summaryCard title="疑似" v-bind:increase=chinaInfo.china_add.suspected v-bind:total=chinaInfo.china_total.suspected></summaryCard>
+            <summaryCard :is-show= true title="疑似" v-bind:increase=chinaInfo.china_add.suspected v-bind:total=chinaInfo.china_total.suspected></summaryCard>
           </div>
           <div class="heal item">
-            <summaryCard title="治愈" v-bind:increase=chinaInfo.china_add.cured v-bind:total=chinaInfo.china_total.cured></summaryCard>
+            <summaryCard :is-show= true title="治愈" v-bind:increase=chinaInfo.china_add.cured v-bind:total=chinaInfo.china_total.cured></summaryCard>
           </div>
           <div class="dead item">
-            <summaryCard title="死亡" v-bind:increase=chinaInfo.china_add.dead v-bind:total=chinaInfo.china_total.dead></summaryCard>
+            <summaryCard :is-show= true title="死亡" v-bind:increase=chinaInfo.china_add.dead v-bind:total=chinaInfo.china_total.dead></summaryCard>
           </div>
         </div>
       </div>
       <div v-else>
         <div class="summary">
           <div class="confirm">
-            <div class="number">{{total.addNum}}</div>
-            <div class="tag"><span>新增确诊</span></div>
+            <summaryCard :is-show= false title="新增确诊" v-bind:total=total.addNum></summaryCard>
           </div>
           <div class="suspect">
-            <div class="number">{{total.confirm}}</div>
-            <div class="tag"><span>累计确诊</span></div>
+            <summaryCard :is-show= false title="累计确诊" v-bind:total=total.confirm></summaryCard>
           </div>
           <div class="heal">
-            <div class="number">{{total.heal}}</div>
-            <div class="tag"><span>累计治愈</span></div>
+            <summaryCard :is-show= false title="累计治愈" v-bind:total=total.heal></summaryCard>
           </div>
           <div class="dead">
-            <div class="number">{{total.dead}}</div>
-            <div class="tag"><span>累计死亡</span></div>
+            <summaryCard :is-show= false title="累计死亡" v-bind:total=total.dead></summaryCard>
           </div>
         </div>
       </div>
@@ -167,7 +163,7 @@
       color: #737373
       margin-left: 1px
       padding-left 16px
-      background: url(https://mat1.gtimg.com/news/zhishiguan/page/icon_qs.png) no-repeat left center
+      background: url(https://xujieyu-1301584958.cos.ap-guangzhou.myqcloud.com/icon_qs.png) no-repeat left center
       background-size: 12Px 12Px
 
   .summary

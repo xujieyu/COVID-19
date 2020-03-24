@@ -40,11 +40,9 @@
         } else {
           getProvinceJsonData(provincePinyin)
               .then(res => {
-                //let dataJson = require('../../data/province/' + provincePinyin + '.json');
                 let myChart= echarts.init(this.$refs.map);
                 myChart.hideLoading();
                 echarts.registerMap(provincePinyin, res);
-                //require(`echarts/map/js/province/${provincePinyin}.js`);
                 let option = buildMapConfig(provincePinyin, this.mapValue);
                 myChart.setOption(option);
               })
