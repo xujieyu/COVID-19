@@ -20,6 +20,7 @@
     },
     mounted() {
       this.mapEchartsInit();
+      window.addEventListener("resize",this.changeSize);
     },
     methods:{
       mapEchartsInit(){
@@ -50,7 +51,14 @@
                 console.log(error);
               });
         }
+      },
+      changeSize(){
+          let myChart= echarts.init(this.$refs.map);
+          myChart.resize();
       }
+    },
+    beforeDestroy() {
+      window.removeEventListener("resize",this.changeSize)
     }
   }
 </script>

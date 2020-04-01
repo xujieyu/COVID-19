@@ -62,6 +62,7 @@
     },
     mounted() {
       this.mapEchartsInit();
+      window.addEventListener("resize",this.changeSize);
     },
     methods: {
       itemClick(index) {
@@ -110,6 +111,18 @@
           myChart3.setOption(this.hubeiDeadOption);
         }
       },
+      changeSize(){
+        if(this.childInfo.provinceName === '全国'){
+          let myChart1 = echarts.init(this.$refs.map);
+          myChart1.resize();
+          let myChart4 = echarts.init(this.$refs.map2);
+          myChart4.resize();
+        }
+        else{
+          let myChart11 = echarts.init(this.$refs.map11);
+          myChart11.resize();
+        }
+      },
       mapEchartsInit() {
         if (this.childInfo.provinceName === '全国') {
           getHubeiMultidata()
@@ -153,6 +166,9 @@
               });
         }
       }
+    },
+    beforeDestroy() {
+      window.removeEventListener("resize",this.changeSize);
     }
   }
 </script>

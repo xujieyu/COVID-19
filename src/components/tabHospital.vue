@@ -5,15 +5,14 @@
       <div class="health-icon"></div>
     </div>
     <div v-for="(item, index) in provincesList">
-      <div class="hotel-item-wrap" province="${item.provinceName}"  v-on:click="getCity(index)" :key="item.provinceName">
-        <div class="hotel-province" data-province="${item.provinceName}" data-count="${item.cityCnt}">
+      <div class="hotel-item-wrap"  v-on:click="getCity(index)" :key="item.provinceName">
+        <div class="hotel-province">
           <div class="hotel-province-name">{{item.provinceName}}</div>
           <div class="count"  :class="{'current': currentList[index]}"></div>
         </div>
         <div class="hotel-city" v-if="currentList[index]" v-for="city in cityList[index]">
           <div class="hotel-city-name">{{city.cityName}}</div>
-          <div class="hotel-city-count">{{city.count}}家<span>进入查询</span></div>
-          <a class="health-link" :href="city.link.url"/>
+          <a class="hotel-city-count" :href="city.link.url">{{city.count}}家<span>进入查询</span></a>
         </div>
       </div>
     </div>
@@ -203,7 +202,6 @@
 
   .health-link
       position absolute
-      width 100%
       height 70px
 
 

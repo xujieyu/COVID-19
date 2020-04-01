@@ -88,8 +88,8 @@
       }
     },
     mounted() {
-      this.tabTopOffset = document.querySelector('.tab-control').offsetTop;
-      window.addEventListener('scroll', this.handleScroll)
+      this.tabTopOffset = document.querySelector('#tab-control').offsetTop;
+      window.addEventListener('scroll', this.handleScroll);
 
     },
     methods:{
@@ -106,7 +106,6 @@
       },
       handleScroll () {
         let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-        let TabId = document.querySelector('.tab-control');
         let Page1Id = document.querySelector('#page1' );
         let Page2Id = document.querySelector('#page2');
         if(scrollTop > this.tabTopOffset){
@@ -125,6 +124,9 @@
           this.currentTab = this.tabs[2].name;
         }
       },
+    },
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
     }
   }
 </script>
@@ -135,14 +137,14 @@
     top 0
     display flex
     text-align center
-    height 40px
-    line-height 40px
-    font-size 24px
+    height 40Px
+    font-size 20px
     background-color #fff
     z-index 10
     margin-top 10px
 
     .tab-control-item
+      padding 5px
       flex 1
 
       span
@@ -164,8 +166,9 @@
         border-bottom 2px solid #fff
 
   .tabControl2
-    top 40px
+    top 40Px
     z-index 9
+    height 30px
 
   .tab-content
     background-color #fff

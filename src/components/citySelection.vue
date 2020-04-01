@@ -38,6 +38,7 @@
     mounted() {
       let index_width = document.getElementById('tab-control');
       this.picker_width = index_width.offsetWidth;
+      window.addEventListener("resize", this.handleChange);
     },
     methods: {
       openSwitchCity() {
@@ -58,6 +59,14 @@
         this.isOpen = false;
         this.$emit('openShow', false)
       },
+      handleChange(){
+        let index_width = document.getElementById('tab-control');
+        console.log(index_width.offsetWidth);
+        this.picker_width = index_width.offsetWidth;
+      }
+    },
+    beforeDestroy() {
+      window.removeEventListener("resize", this.handleChange);
     }
   }
 </script>
